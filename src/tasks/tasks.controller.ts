@@ -10,16 +10,21 @@ export class TasksController {
     constructor(private tasksService:TasksService){}
   ///*** */
 
-//     @Get() // from this has geting type from interface
-//     getTasks(@Query() filterDto:GetTasksFileterDto):Task[]{ 
-//         //from this it we have any Filter define
-//         //call taskService to getTaskwith Filter
-//         if (Object.keys(filterDto).length){
-//            return this.tasksService.getTaskWithFilters(filterDto);
-//         } else {
-//             return this.tasksService.getAllTasks();
-//         }
 
+    // @Get() // from this has geting type from interface
+    // getTasks(@Query() filterDto:GetTasksFileterDto):Task[]{ 
+    //     //from this it we have any Filter define
+    //     //call taskService to getTaskwith Filter
+    //     if (Object.keys(filterDto).length){
+    //        return this.tasksService.getTaskWithFilters(filterDto);
+    //     } else {
+    //         return this.tasksService.getAllTasks();
+    //     }
+
+    @Get()
+    getTask(@Query() filterDto:GetTasksFileterDto) :Promise <Task[]> {
+        return this.tasksService.getTask(filterDto);
+    }
             @Get(':/id')
             getTaskById(@Param('id') id:string):Promise<Task> {
                 return this.tasksService.getTaskById(id);

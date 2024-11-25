@@ -17,6 +17,10 @@ export class TasksService {
 
 
     ){} 
+
+    getTask(filterDto:GetTasksFileterDto) : Promise<Task[]> {
+        return this.taskRepository.getTask(filterDto)
+    }
     // private tasks:Task[]= []; //this mean setting for empty  | pub,pr will you design for using 
      
 
