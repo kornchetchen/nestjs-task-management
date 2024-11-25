@@ -6,7 +6,13 @@ export class GetTasksFileterDto{
     @IsEnum(TaskStatus)
     status?: TaskStatus;
 
-    @IsOptional()
-    @IsString()
+    // @IsString()
+    title?:string;
+
+    // @IsOptional()
+    // @IsString()
     serch?:string;
+
+    // @IsString()
+    description:string;
 }

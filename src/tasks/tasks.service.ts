@@ -3,49 +3,46 @@ import {  TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFileterDto } from './dto/Get-tasks-filter.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TaskRepository } from './tasks.repository';
 import { Task } from './task.entity';
 import { TasksModule } from './tasks.module';
 import { Repository } from 'typeorm';
 import {v4 as uuid} from 'uuid';
 @Injectable()
 export class TasksService {
+    tasks: Task[];
     constructor(
         @InjectRepository(Task)
         private taskRepository:Repository<Task>,
-        
-
-
     ){} 
-
-    getTask(filterDto:GetTasksFileterDto) : Promise<Task[]> {
-        return this.taskRepository.getTask(filterDto)
+    async getTask(filterDto:GetTasksFileterDto) : Promise<Task[]> {
+        return Promise.resolve(this.getTaskWithFilters(filterDto));
     }
+   
     // private tasks:Task[]= []; //this mean setting for empty  | pub,pr will you design for using 
      
 
-    // getAllTasks():Task[]{
-    //     return this.tasks;
-    // }
-//     getTaskWithFilters(filterDto:GetTasksFileterDto):Task[]{
-//         const {status, serch} = filterDto;
+    getAllTasks():Task[]{
+        return this.tasks;
+    }
+    getTaskWithFilters(filterDto:GetTasksFileterDto):Task[]{
+        const {status, serch} = filterDto;
 
-//         let tasks  = this.getAllTasks();
-//         console.log({tasks});
+        let tasks  = this.getAllTasks();
+        console.log({tasks});
         
-//         if (status) { 
-//             tasks = tasks.filter((task) => task.status === status);
-//         }
-//         if (serch) {
-//             tasks = tasks.filter((task) => {
-//                 if (task.title.includes(serch) || task.description.includes(serch)){
-//                     return true;
-//                 }
-//                 return false;
-//             });
-//         }
-//         return tasks;
-//     }
+        if (status) { 
+            tasks = tasks.filter((task) => task.status === status);
+        }
+        if (serch) {
+            tasks = tasks.filter((task) => {
+                if (task.title.includes(serch) || task.description.includes(serch)){
+                    return true;
+                }
+                return false;
+            });
+        }
+        return tasks;
+    }
         async getTaskById(id:string) : Promise<Task> {
             const found =  await this.taskRepository.findOne({where:{id}});
             if (!found) {

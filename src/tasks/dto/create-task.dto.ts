@@ -4,9 +4,10 @@ import { PrimaryColumn } from "typeorm";
 export class CreateTaskDto {
     @PrimaryColumn('uuid')
     id: string;
+
     // @IsNotEmpty()
     title:string;
 
-    @IsNotEmpty()
+    // @IsNotEmpty()
     description: string;
 }
