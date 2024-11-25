@@ -15,6 +15,8 @@ export class TasksService {
         const {status, serch} = filterDto;
 
         let tasks  = this.getAllTasks();
+        console.log({tasks});
+        
         if (status) { 
             tasks = tasks.filter((task) => task.status === status);
         }
@@ -28,12 +30,15 @@ export class TasksService {
         }
         return tasks;
     }
-    getTaskById(id:string):Task {
+
+    getTaskById(id:string):Task  {
+        //if array meaing calling all to using 
         // return this.tasks.find( (task) => task.id === id);'
         const found = this.tasks.find( (task) => task.id === id);   
         if (!found) {
-                throw new NotFoundException(`This task by this ${id} has been not found `);
-        }
+                throw new NotFoundException(`This task by this ${id} has been not found `);//lib error
+        }   
+        // return { message }
             return found;
     }
     createTaslk(createTaskDto:CreateTaskDto):Task{ //Tacking Task for know type of it 
