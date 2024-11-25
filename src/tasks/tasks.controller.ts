@@ -2,7 +2,8 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestj
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './tasks.model';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { getTasksFileterDto } from './dto/get-tasks-filter.dto';
+import { GetTasksFileterDto } from './dto/Get-tasks-filter.dto';
+import { UpdateStatusDto } from './dto/update-task-status.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -10,7 +11,7 @@ export class TasksController {
 
 
     @Get() // from this has geting type from interface
-    getTasks(@Query() filterDto:getTasksFileterDto):Task[]{ 
+    getTasks(@Query() filterDto:GetTasksFileterDto):Task[]{ 
         //from this it we have any Filter define
         //call taskService to getTaskwith Filter
         if (Object.keys(filterDto).length){
@@ -38,8 +39,9 @@ export class TasksController {
 
      @Patch('/:id/status')
      updateTaskStatus(@Param('id') id:string , 
-     @Body('status') status:TaskStatus)
-     : Task {
+     @Body() updateStatusDto:UpdateStatusDto,
+): Task {
+        const {status} = updateStatusDto;
          return this.tasksService.updateTaskStatus(id,status);
      }
     }
