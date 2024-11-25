@@ -21,28 +21,28 @@ export class TasksController {
         }
        
 }
-    @Get('/:id')
-    getTaskById(@Param('id') id:string):Task {
-        return this.tasksService.getTaskById(id);
-    }
-    @Post()
-    //in this case  we using @Body to recieved build from post 
-    //with createTaslk it will be has post value to Task to be get it 
-    createTask(@Body()  createTaskDto:CreateTaskDto): Task {
-            return this.tasksService.createTaslk(createTaskDto)
-        }
+//     @Get('/:id')
+//     getTaskById(@Param('id') id:string):Task {
+//         return this.tasksService.getTaskById(id);
+//     }
+//     @Post()
+//     //in this case  we using @Body to recieved build from post 
+//     //with createTaslk it will be has post value to Task to be get it 
+//     createTask(@Body()  createTaskDto:CreateTaskDto): Task {
+//             return this.tasksService.createTaslk(createTaskDto)
+//         }
 
-    @Delete('/:id')
-    deleteTask(@Param('id') id:string ): void {
-        return this.tasksService.deleteTask(id);
-    }
+//     @Delete('/:id')
+//     deleteTask(@Param('id') id:string ): void {
+//         return this.tasksService.deleteTask(id);
+//     }
 
-     @Patch('/:id/status')
-     updateTaskStatus(@Param('id') id:string , 
-     @Body() updateStatusDto:UpdateStatusDto,
-): Task {
-        const {status} = updateStatusDto;
-         return this.tasksService.updateTaskStatus(id,status);
-     }
+//      @Patch('/:id/status')
+//      updateTaskStatus(@Param('id') id:string , 
+//      @Body() updateStatusDto:UpdateStatusDto,
+// ): Task {
+//         const {status} = updateStatusDto;
+//          return this.tasksService.updateTaskStatus(id,status);
+//      }
     }
 
