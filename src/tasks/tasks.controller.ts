@@ -25,15 +25,15 @@ export class TasksController {
     getTask(@Query() filterDto:GetTasksFileterDto) :Promise< Task[]> {
         return this.tasksService.getTask(filterDto);
     }
-            @Get(':/id')
-            getTaskById(@Param('id') id:string):Promise<Task> {
+    @Get('/:id')
+    getTaskById(@Param('id') id:string):Promise<Task> {
                 return this.tasksService.getTaskById(id);
                 
             }
 //     @Get('/:id')
 //     getTaskById(@Param('id') id:string):Task {
 //         return this.tasksService.getTaskById(id);
-//     }
+// //     }
     @Post()
     //in this case  we using @Body to recieved build from post 
     //with createTaslk it will be has post value to Task to be get it 

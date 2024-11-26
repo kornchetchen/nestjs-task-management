@@ -15,41 +15,43 @@ export class TasksService {
         private taskRepository:Repository<Task>,
     ){} 
     async getTask(filterDto:GetTasksFileterDto) : Promise<Task[]> {
+        const task = await this.getAllTasks();
         return Promise.resolve(this.getTaskWithFilters(filterDto));
     }
-   
+
     // private tasks:Task[]= []; //this mean setting for empty  | pub,pr will you design for using 
      
 
-    getAllTasks():Task[]{
-        return this.tasks;
+
+    async getAllTasks():Promise<Task[]>{
+        const tasks = await this.taskRepository.find()
+        return tasks;
     }
-    getTaskWithFilters(filterDto:GetTasksFileterDto):Task[]{
+
+    async getTaskWithFilters(filterDto:GetTasksFileterDto): Promise<Task[]> {
         const {status, serch} = filterDto;
 
-        let tasks  = this.getAllTasks();
+        let tasks  =await this.getAllTasks();
         console.log({tasks});
         
         if (status) { 
             tasks = tasks.filter((task) => task.status === status);
         }
         if (serch) {
-            tasks = tasks.filter((task) => {
-                if (task.title.includes(serch) || task.description.includes(serch)){
-                    return true;
-                }
-                return false;
-            });
+            tasks = tasks.filter((task) => task.title.includes(serch) || task.description.includes(serch));
         }
         return tasks;
     }
-        async getTaskById(id:string) : Promise<Task> {
-            const found =  await this.taskRepository.findOne({where:{id}});
-            if (!found) {
-                throw new NotFoundException(`Task with this ID "${id}" not found `)
+      async getTaskById(id: string): Promise<Task> {
+        console.log(`Getting task by ID: ${id}`);
+        const found = await this.taskRepository.findOneBy({ id });
+        console.log(`Found task: ${found}`);
+        if (!found) {
+          console.log(`Task not found`);
+          throw new NotFoundException(`Task with this ID "${id}" not found `);
         }
-                return found;
-    }
+        return found;
+      }
 
         async createTask(createTaskDto:CreateTaskDto):Promise<Task> {
         // return this.taskRepository.create(createTaskDto);
